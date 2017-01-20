@@ -62,6 +62,8 @@ module.exports = function(grunt) {
         hapi: {
             custom_options: {
                 options: {
+                    hostname: '0.0.0.0',
+                    port: 8080,
                     server: require('path').resolve('./server'),
                     bases: {
                         '/dist': require('path').resolve('./dist/')
