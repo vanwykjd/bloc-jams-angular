@@ -2,6 +2,10 @@
     function SongPlayer() {
         var SongPlayer = {};
         
+        /**
+        * @desc Current song object
+        * @type {Object}
+        */
         var currentSong = null;
         
         /**
@@ -29,18 +33,37 @@
             currentSong = song;
         };
         
+        /**
+        * @function playSong
+        * @desc Plays the current Buzz object audio file and sets the playing property of the song object to true
+        * @param {Object} song
+        */
+        var playSong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+        };
+        
+        /**
+        * @function SongPlayer.play
+        * @desc Public method of SongPlayer that uses the private method playSong to play selected song and uses private method setSong to ensure only the selected song is to be played
+        * @param {Object} song
+        */
         SongPlayer.play = function(song) {
             if (currentSong !== song) {
                 setSong(song);
-                currentBuzzObject.play();
-                song.playing = true;
+                playSong(song);
             } else if (currentSong === song) {
                 if (currentBuzzObject.isPause()) {
-                    currentBuzzObject.play();
+                    playSong(song);
                 }
             }
         };
         
+        /**
+        * @function SongPlayer.pause
+        * @desc Public method of SongPlayer pauses audio file of currentBuzzObject and sets playing property of song object to false 
+        * @param {Object} song
+        */
         SongPlayer.pause = function(song) {
             currentBuzzObject.pause();
             song.playing = false;
