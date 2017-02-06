@@ -31,7 +31,7 @@
         */
         var setSong = function(song) {
             if (currentBuzzObject) {
-                currentBuzzObject.stop();
+                stopSong(song);
                 SongPlayer.currentSong.playing = null;
             }
          
@@ -51,6 +51,16 @@
         var playSong = function(song) {
             currentBuzzObject.play();
             song.playing = true;
+        };
+        
+        /**
+        * @function playSong
+        * @desc Stops the current Buzz object audio file and sets the playing property of the song object to null
+        * @param {Object} song
+        */
+        var stopSong = function(song) {
+            currentBuzzObject.stop();
+            song.playing = null;
         };
         
         /**
@@ -96,12 +106,30 @@
             currentSongIndex--;
             
             if (currentSongIndex < 0) {
-                currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null;
+                stopSong(SongPlayer.currentSong);
             } else {
                 var song = currentAlbum.songs[currentSongIndex];
                 setSong(song);
                 playSong(song)
+            }
+        };
+        
+        /**
+        * @function next
+        * @desc Public method of SongPlayer that sets the song to next song in album
+        */ 
+        SongPlayer.next = function() {
+            var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+            currentSongIndex++;
+            
+            var lastSong = currentAlbum.songs.length - 1;
+            
+            if (currentSongIndex > lastSong) {
+                stopSong(SongPlayer.currentSong);
+            } else {
+                var song = currentAlbum.songs[currentSongIndex];
+                setSong(song);
+                playSong(song);
             }
         };
         
