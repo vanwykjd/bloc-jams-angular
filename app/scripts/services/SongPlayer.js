@@ -37,7 +37,8 @@
          
             currentBuzzObject = new buzz.sound(song.audioUrl, {
                 formats: ['mp3'],
-                preload: true
+                preload: true,
+                volume: SongPlayer.volume
             });
             
             currentBuzzObject.bind('timeupdate', function() {
@@ -48,6 +49,7 @@
             
             currentBuzzObject.bind('volumechange', function() {
                 $rootScope.$apply(function() {
+                    var volume = 
                     SongPlayer.volume = currentBuzzObject.getVolume();
                 });
             });
@@ -178,7 +180,7 @@
         */ 
         SongPlayer.setVolume = function(volume) {
             if (currentBuzzObject) {
-                currentBuzzObject.setVolume(volume);
+               currentBuzzObject.setVolume(volume);
             }
             SongPlayer.volume = volume;
         };
